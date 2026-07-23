@@ -1,0 +1,87 @@
+% ===== Shared preamble for Calendar notes =====
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{pifont} % for \ding
+
+% ---- Colors ----
+\definecolor{primary}{HTML}{1B3A6B}
+\definecolor{accent}{HTML}{2E7D32}
+\definecolor{warnclr}{HTML}{B45309}
+\definecolor{tipclr}{HTML}{0F5D8C}
+\definecolor{lightbg}{HTML}{F4F6F8}
+
+% ---- Section styling ----
+\titleformat{\section}
+  {\normalfont\Large\bfseries\color{primary}}
+  {\thesection}{0.5em}{}[{\color{primary}\titlerule[1pt]}]
+\titleformat{\subsection}
+  {\normalfont\large\bfseries\color{primary}}
+  {\thesubsection}{0.5em}{}
+
+% ---- Header/Footer ----
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0.4pt}
+\fancyfoot[C]{\thepage}
+
+% ---- Hyperref ----
+\hypersetup{
+  colorlinks=true,
+  linkcolor=primary,
+  urlcolor=tipclr,
+  citecolor=accent
+}
+
+% ---- Custom boxes ----
+% Formula / Key concept box
+\newtcolorbox{formulabox}[1][]{
+  enhanced, breakable,
+  colback=lightbg, colframe=primary,
+  boxrule=0.8pt, arc=2pt,
+  left=8pt, right=8pt, top=6pt, bottom=6pt,
+  title={\textbf{#1}},
+  fonttitle=\bfseries\color{white},
+  colbacktitle=primary,
+  attach boxed title to top left={xshift=8pt, yshift=-2mm},
+  boxed title style={boxrule=0pt, arc=2pt}
+}
+
+% Tip / trick box
+\newtcolorbox{tipbox}[1][Tip]{
+  enhanced, breakable,
+  colback=blue!4, colframe=tipclr,
+  boxrule=0.8pt, arc=2pt,
+  left=8pt, right=8pt, top=6pt, bottom=6pt,
+  title={\textbf{\textcolor{white}{\ding{72}\ #1}}},
+  fonttitle=\bfseries, colbacktitle=tipclr,
+}
+
+% Warning / common mistake box
+\newtcolorbox{warnbox}[1][Watch Out]{
+  enhanced, breakable,
+  colback=orange!6, colframe=warnclr,
+  boxrule=0.8pt, arc=2pt,
+  left=8pt, right=8pt, top=6pt, bottom=6pt,
+  title={\textbf{\textcolor{white}{#1}}},
+  fonttitle=\bfseries, colbacktitle=warnclr,
+}
+
+% Example / worked question box
+\newtcolorbox{examplebox}[1][Example]{
+  enhanced, breakable,
+  colback=green!4, colframe=accent,
+  boxrule=0.8pt, arc=2pt,
+  left=8pt, right=8pt, top=6pt, bottom=6pt,
+  title={\textbf{\textcolor{white}{#1}}},
+  fonttitle=\bfseries, colbacktitle=accent,
+}
