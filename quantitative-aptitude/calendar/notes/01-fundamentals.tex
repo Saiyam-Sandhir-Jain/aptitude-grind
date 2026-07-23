@@ -1,0 +1,156 @@
+\documentclass[11pt]{article}
+\input{../../../preamble.tex}
+
+\title{\color{primary}\textbf{Calendar --- Fundamentals}\\[4pt]\large Odd Days, Leap Years \& the Day-of-the-Week Formula}
+\author{Aptitude Grind}
+\date{}
+
+\lhead{\small Calendar --- Fundamentals}
+\rhead{\small Aptitude Grind}
+
+\begin{document}
+\maketitle
+\thispagestyle{fancy}
+
+\section*{Why Calendar Problems Matter}
+Calendar questions test whether you can find the \textbf{day of the week} for a given date, or work
+backward/forward from a known day. They show up constantly in placement tests (TCS NQT, Infosys,
+Wipro, Capgemini) and in CAT/other reasoning sections, usually as 1--2 quick-scoring questions
+\textbf{if} you know the odd-days method cold. The entire topic rests on one idea: \emph{the calendar
+repeats every 7 days, so only the remainder after dividing by 7 matters.}
+
+\section{Odd Days}
+
+\begin{formulabox}[Definition]
+In a given period, the number of days \textbf{more than complete weeks} is called the number of
+\textbf{odd days}.
+\end{formulabox}
+
+For example, 17 days = 2 complete weeks (14 days) + 3 extra days $\Rightarrow$ 3 odd days.
+Only the odd-day count matters for finding the day of the week --- full weeks never shift the day.
+
+\subsection{Odd Days in a Year}
+\begin{itemize}[leftmargin=1.4em]
+  \item 1 ordinary year $= 365$ days $= 52$ weeks $+ 1$ day $\Rightarrow$ \textbf{1 odd day}
+  \item 1 leap year $= 366$ days $= 52$ weeks $+ 2$ days $\Rightarrow$ \textbf{2 odd days}
+\end{itemize}
+
+\subsection{Odd Days in Centuries}
+\begin{formulabox}[Century Odd-Day Table --- memorize this]
+\centering
+\begin{tabular}{lc}
+\toprule
+\textbf{Period} & \textbf{Odd Days} \\
+\midrule
+100 years & 5 \\
+200 years & 3 \\
+300 years & 1 \\
+400 years & 0 \\
+\bottomrule
+\end{tabular}
+\end{formulabox}
+
+\textbf{Why 400 years gives 0:} $100$ years $= 76$ ordinary $+ 24$ leap years
+$= (76 \times 1 + 24 \times 2) = 124$ odd days $= 17$ weeks $+ 5$ days $\Rightarrow 5$ odd days.
+So $400$ years $= (5 \times 4) + 1 \text{ extra leap day (400 itself is a leap century)} = 21 \equiv 0 \pmod 7$.
+
+\begin{tipbox}[Pattern]
+Every 4th century (400, 800, 1200, 1600, 2000, 2400, \ldots) has \textbf{0 odd days} --- meaning the
+calendar of year $Y$ is identical to the calendar of year $Y + 400$. This is why 2000 and 2400 have
+the exact same calendar.
+\end{tipbox}
+
+\section{Leap Years}
+
+\begin{formulabox}[Leap Year Rule]
+\begin{enumerate}[leftmargin=1.4em]
+  \item Every year divisible by 4 is a leap year --- \textbf{unless} it is a century year (ends in 00).
+  \item A century year is a leap year only if it is divisible by \textbf{400}.
+\end{enumerate}
+\end{formulabox}
+
+\begin{examplebox}[Quick Classification]
+\begin{itemize}[leftmargin=1.4em]
+  \item \textbf{Leap:} 1948, 2004, 1676, 2000, 1600, 2400 (divisible by 4; century years also divisible by 400)
+  \item \textbf{Not leap:} 2001, 2002, 2003, 2005 (not divisible by 4); 1800, 1900, 2100, 2300
+    (century years \emph{not} divisible by 400)
+\end{itemize}
+\end{examplebox}
+
+\begin{warnbox}[Common Mistake]
+Students often forget the century exception and assume any year divisible by 4 is automatically a
+leap year. \textbf{1900 is divisible by 4 but is NOT a leap year} (not divisible by 400). Always check
+century years separately.
+\end{warnbox}
+
+\section{Mapping Odd Days to a Day of the Week}
+
+Once you compute the total number of odd days for a period (taking the result mod 7), map it using:
+
+\begin{formulabox}[Odd Days $\to$ Day Table]
+\centering
+\begin{tabular}{lccccccc}
+\toprule
+Odd Days & 0 & 1 & 2 & 3 & 4 & 5 & 6 \\
+\midrule
+Day & Sun & Mon & Tue & Wed & Thu & Fri & Sat \\
+\bottomrule
+\end{tabular}
+\end{formulabox}
+
+This table is anchored on the fact that \textbf{1 January, 1 AD was a Monday} in the proleptic
+Gregorian calendar used for these problems, giving Sunday = 0 odd days as the baseline.
+
+\section{General Method: Finding the Day for Any Date}
+
+To find the day of the week on date $D$ of month $M$, year $Y$:
+
+\begin{formulabox}[Step-by-Step Method]
+\begin{enumerate}[leftmargin=1.4em]
+  \item Split $Y - 1$ (the reference is "up to the end of the previous year") into:
+    \begin{itemize}
+      \item Number of 400s $\to$ always 0 odd days
+      \item Remaining 100s (0 to 3) $\to$ 5, 3, or 1 odd days respectively
+      \item Remaining years $\to$ (ordinary years $\times 1$) + (leap years $\times 2$)
+    \end{itemize}
+  \item Add the odd days contributed by the \textbf{months elapsed so far in year $Y$} (Jan 1 to the
+    last day of the previous month), remembering to use 29 for February in a leap year.
+  \item Add the day number $D$ of the current month.
+  \item Sum everything, take mod 7, and read off the day from the Odd Days $\to$ Day table.
+\end{enumerate}
+\end{formulabox}
+
+\begin{examplebox}[Worked Example --- 15 August 2010]
+\textbf{Step 1: Years up to 2009.}
+\begin{itemize}[leftmargin=1.4em]
+  \item 1600 years $\to$ 0 odd days; 400 years (1600--1999... use nearest 400 block) $\to$ 0 odd days
+  \item Remaining 9 years (2001--2009): 2004 and 2008 are leap $\Rightarrow$ 2 leap $+$ 7 ordinary
+    $= (2 \times 2) + (7 \times 1) = 11 \equiv 4$ odd days
+\end{itemize}
+\textbf{Step 2: Months elapsed (Jan--Jul 2010) + 15 days of Aug.}
+\[
+31+28+31+30+31+30+31+15 = 227 \text{ days} = 32 \text{ weeks} + 3 \text{ days} \Rightarrow 3 \text{ odd days}
+\]
+\textbf{Step 3: Total.}
+\[
+0 + 0 + 4 + 3 = 7 \equiv 0 \pmod 7 \Rightarrow \textbf{Sunday}
+\]
+15 August 2010 was indeed a \textbf{Sunday}.
+\end{examplebox}
+
+\begin{tipbox}[Faster Alternative]
+For placement-test speed, most people skip the "years since year 1" method entirely and instead
+work \textbf{relative to a known anchor date} (e.g., "1 Jan 2000 was a Saturday" or "1 Jan 1 was
+Monday") using only the years \emph{between} the anchor and the target date. This is faster and less
+error-prone --- see \texttt{02-tricks-and-shortcuts.tex} for the anchor-date and month-code methods.
+\end{tipbox}
+
+\section{Key Takeaways}
+\begin{itemize}[leftmargin=1.4em]
+  \item Everything reduces to counting \textbf{odd days} and taking the result mod 7.
+  \item Memorize: 100y $\to$ 5, 200y $\to$ 3, 300y $\to$ 1, 400y $\to$ 0 odd days.
+  \item Leap year = divisible by 4, except century years, which need divisibility by 400.
+  \item Always double check whether February in the target year has 28 or 29 days.
+\end{itemize}
+
+\end{document}

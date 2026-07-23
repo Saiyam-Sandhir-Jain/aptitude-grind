@@ -1,0 +1,171 @@
+\documentclass[11pt]{article}
+\input{../../../preamble.tex}
+
+\title{\color{primary}\textbf{Calendar --- Tricks, Shortcuts \& Question Patterns}\\[4pt]\large Anchor-Day Method, Month Codes \& What Repeats in TCS / CAT}
+\author{Aptitude Grind}
+\date{}
+
+\lhead{\small Calendar --- Tricks \& Question Patterns}
+\rhead{\small Aptitude Grind}
+
+\begin{document}
+\maketitle
+\thispagestyle{fancy}
+
+\section{The Anchor-Day Method (Fastest for Placement Tests)}
+
+Instead of counting odd days from year 1, work relative to a \textbf{known reference date} that is
+close to your target date. Most questions either give you a reference day directly, or you can use a
+memorized anchor.
+
+\begin{formulabox}[Useful Anchors to Memorize]
+\begin{itemize}[leftmargin=1.4em]
+  \item 1 January, 1 AD $\to$ Monday
+  \item 1 January, 1600 (or 2000) $\to$ Saturday
+  \item 1 January, 2000 $\to$ Saturday \quad (most practical anchor for modern-date questions)
+\end{itemize}
+\end{formulabox}
+
+\begin{formulabox}[Anchor-Day Procedure]
+\begin{enumerate}[leftmargin=1.4em]
+  \item Find the number of complete years between the anchor and target year.
+  \item Odd days contributed $=$ (ordinary years $\times 1$) $+$ (leap years $\times 2$), reduced mod 7.
+  \item Add odd days for the months elapsed in the target year, then add the date number.
+  \item Add this to the anchor's day-of-week position (mod 7) and read off the result.
+\end{enumerate}
+\end{formulabox}
+
+\begin{examplebox}[Example --- Using an Anchor]
+\textit{If 1 Jan 2000 was a Saturday, what day was 1 Jan 2010?}
+\begin{itemize}[leftmargin=1.4em]
+  \item Years 2000--2009 (10 years, but we count odd days contributed \emph{up to} 1 Jan 2010, i.e.\ years 2000--2009 inclusive as full years elapsed)
+  \item Leap years in that span: 2000, 2004, 2008 $\to$ 3 leap years; ordinary years: 7
+  \item Odd days $= (3 \times 2) + (7 \times 1) = 13 \equiv 6 \pmod 7$
+  \item Saturday $+ 6$ odd days $\to$ \textbf{Friday}
+\end{itemize}
+\end{examplebox}
+
+\section{Month Codes Method (a.k.a. Doomsday-style Shortcut)}
+
+A faster alternative used heavily in coaching materials: assign each month a fixed \textbf{code}
+representing its odd-day contribution from 1 January of a non-leap year up to the 1st of that month.
+
+\begin{formulabox}[Month Codes --- Non-Leap Year]
+\centering
+\begin{tabular}{lccccccccccccc}
+\toprule
+Month & Jan & Feb & Mar & Apr & May & Jun & Jul & Aug & Sep & Oct & Nov & Dec \\
+\midrule
+Code & 0 & 3 & 3 & 6 & 1 & 4 & 6 & 2 & 5 & 0 & 3 & 5 \\
+\bottomrule
+\end{tabular}
+\end{formulabox}
+
+\begin{tipbox}[Leap Year Adjustment]
+For a \textbf{leap year}, subtract 1 from the codes of \textbf{January and February only} (since the
+extra day, 29 Feb, hasn't occurred yet when computing odd days up to those months). From March
+onward in a leap year, use the codes as-is since the leap day has already been "absorbed."
+\end{tipbox}
+
+\begin{formulabox}[Putting It Together]
+\[
+\text{Day code} = \big(\text{Date} + \text{Month code} + \text{Year's odd days from anchor century}\big) \bmod 7
+\]
+Match the result against the Odd-Days $\to$ Day table from \texttt{01-fundamentals.tex}.
+\end{formulabox}
+
+\begin{warnbox}[When to Use Which Method]
+The \textbf{odd-days-from-scratch} method (Notes 1) is more intuitive and safer under exam pressure
+because you derive everything instead of recalling a code table. The \textbf{month-code} method is
+faster once memorized, but a single misremembered code silently gives a wrong answer. For placement
+tests with negative marking, prefer the method you can execute without doubt.
+\end{warnbox}
+
+\section{Same Calendar Repeats}
+
+\begin{formulabox}[Rule]
+Two years have the \textbf{same calendar} if:
+\begin{enumerate}[leftmargin=1.4em]
+  \item Both are ordinary years or both are leap years, \textbf{and}
+  \item The total number of odd days between them (summed year by year) is a multiple of 7.
+\end{enumerate}
+\end{formulabox}
+
+\begin{examplebox}[Example]
+Find the next year with the same calendar as 2007 (an ordinary year).
+\begin{itemize}[leftmargin=1.4em]
+  \item 2007 $\to$ 2008: ordinary year, 1 odd day. Running total: 1
+  \item 2008 $\to$ 2009: 2008 is leap, 2 odd days. Running total: 3
+  \item 2009 $\to$ 2010: ordinary, 1 odd day. Running total: 4
+  \item 2010 $\to$ 2011: ordinary, 1 odd day. Running total: 5
+  \item 2011 $\to$ 2012: ordinary, 1 odd day. Running total: 6
+  \item 2012 $\to$ 2013: 2012 is leap, 2 odd days. Running total: 8 $\equiv 1$
+  \item Continue... total odd days reach a multiple of 7 at \textbf{2018} (11 years later)
+\end{itemize}
+This is a classic recurring question type: \emph{"Calendar for 2007 will be the same as calendar for
+which year?"} $\to$ Answer: \textbf{2018}.
+\end{examplebox}
+
+\begin{tipbox}[Speed Rule of Thumb]
+For an ordinary year to repeat, you typically need \textbf{6, 11, or 17 years} later (rarely other
+gaps), and the target year must also be ordinary. For a leap year, it usually repeats after
+\textbf{28 years} (or sometimes 12/40 depending on century boundaries). Don't blindly memorize this
+--- verify with the running-odd-day-total method above, since century boundaries (1800, 1900, 2100)
+break the usual pattern.
+\end{tipbox}
+
+\section{Common Question Types in TCS NQT, CAT \& Similar Exams}
+
+Based on recurring patterns across placement and competitive exams, Calendar questions almost always
+fall into one of these categories:
+
+\begin{formulabox}[Category 1: Find the Day for a Given Date]
+\textit{"What day of the week was 15 August 1947?"} --- direct application of the odd-days method.
+Very common as a standalone question in TCS NQT and SSC/Bank exams.
+\end{formulabox}
+
+\begin{formulabox}[Category 2: Day $N$ Days After/Before a Given Day]
+\textit{"Today is Monday. What day will it be after 61 days?"} --- take $N \bmod 7$ and count forward
+(or backward) from the given day. \textbf{No leap year logic needed} unless the range spans a
+different-length month setup (irrelevant here since we're just counting days, not months).
+\end{formulabox}
+
+\begin{formulabox}[Category 3: Same Calendar / Repeating Year]
+\textit{"The calendar for 2005 is the same as the calendar for which year?"} --- use the running-odd-
+day-total method above.
+\end{formulabox}
+
+\begin{formulabox}[Category 4: Given One Date's Day, Find Another Date's Day (Different Year)]
+\textit{"If 8 Dec 2007 was Saturday, what day was 8 Dec 2006?"} --- find odd days \emph{between} the
+two dates (same month/date, different year) and shift accordingly. Because month and date match, you
+only need to account for the number of odd days contributed by the intervening year(s) --- no month
+calculation required. This is the fastest sub-type once you recognize it.
+\end{formulabox}
+
+\begin{formulabox}[Category 5: Century / Leap-Year Reasoning (CAT-style, trickier)]
+\textit{"Can the last day of a century ever be a Tuesday?"} --- requires knowing that centuries (100,
+200, 300, 400 years) only ever contribute 5, 3, 1, or 0 odd days, so the last day of \emph{any}
+century can only be \textbf{Sunday, Monday, Wednesday, or Friday} --- never Tuesday, Thursday, or
+Saturday. CAT and other reasoning-heavy exams like to test this kind of derived property rather than
+a direct date lookup.
+\end{formulabox}
+
+\begin{formulabox}[Category 6: Reverse Problems --- Find the Year or Date]
+\textit{"In which year after 2000 will 1 January fall on a Sunday, given some constraint?"} --- work
+backward from the odd-day requirement. Less common but appears in trickier CAT-adjacent sets.
+\end{formulabox}
+
+\section{Exam Strategy Summary}
+\begin{itemize}[leftmargin=1.4em]
+  \item Identify the category first --- it tells you which shortcut applies (don't default to full
+    odd-day counting from year 1 if a same-date/different-year shortcut applies).
+  \item For "N days after/before" questions, just do $N \bmod 7$ --- don't overthink with leap years.
+  \item For "same calendar" questions, track the running odd-day total year by year; stop at the
+    first multiple of 7.
+  \item Always double-check century years (1800, 1900, 2100, \ldots) for the leap year exception ---
+    these are the most common trap in tricky questions.
+  \item Practice the odd-days method until it's automatic --- speed comes from not having to think
+    about \emph{why} each step works, only executing it.
+\end{itemize}
+
+\end{document}

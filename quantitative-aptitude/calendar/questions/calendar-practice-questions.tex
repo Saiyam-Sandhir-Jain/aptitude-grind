@@ -1,0 +1,194 @@
+\documentclass[11pt]{article}
+\input{../../../preamble.tex}
+
+\title{\color{primary}\textbf{Calendar --- Practice Questions}\\[4pt]\large Medium to Difficult, With Full Solutions}
+\author{Aptitude Grind}
+\date{}
+
+\lhead{\small Calendar --- Practice Questions}
+\rhead{\small Aptitude Grind}
+
+\begin{document}
+\maketitle
+\thispagestyle{fancy}
+
+\noindent\textit{Difficulty is marked as \textbf{[M]} Medium or \textbf{[H]} Hard. Solve on your own
+first, then check the solution. Solutions use the odd-days method from \texttt{01-fundamentals.tex}.}
+
+\bigskip
+\hrule
+\bigskip
+
+\subsection*{Q1 [M] --- Direct Date Lookup}
+What was the day of the week on 26 January 1950?
+
+\begin{tipbox}[Solution]
+Reference: 1 January 1900 was a \textbf{Monday}.
+\begin{itemize}[leftmargin=1.4em]
+  \item Years 1900--1949 (50 years elapsed up to start of 1950... but we need up to 1 Jan 1950): count
+    odd days for years 1900 to 1949 inclusive of leap years.
+  \item Leap years 1900--1949: 1904, 1908, \ldots, 1948 --- but 1900 is \emph{not} leap (century rule)
+    $\Rightarrow$ 12 leap years, 38 ordinary years.
+  \item Odd days $= (12 \times 2) + (38 \times 1) = 24 + 38 = 62 \equiv 62 - 56 = 6 \pmod 7$
+  \item Monday $+ 6$ odd days $\to$ \textbf{Sunday} (this gives the day for 1 Jan 1950)
+  \item Add 25 more days to reach 26 Jan: $25 \bmod 7 = 4$ odd days
+  \item Sunday $+ 4 \to$ \textbf{Thursday}
+\end{itemize}
+\textbf{Answer: Thursday}
+\end{tipbox}
+
+\subsection*{Q2 [M] --- N Days After}
+Today is Wednesday. What day will it be after 90 days?
+
+\begin{tipbox}[Solution]
+$90 \bmod 7 = 90 - 84 = 6$ odd days.
+Wednesday $+ 6$ days $\to$ \textbf{Tuesday}.
+\textbf{Answer: Tuesday}
+\end{tipbox}
+
+\subsection*{Q3 [M] --- Same Date, Different Year}
+If 15 March 2015 was a Sunday, what day was 15 March 2016?
+
+\begin{tipbox}[Solution]
+2015 is an ordinary year, but the gap 15 Mar 2015 $\to$ 15 Mar 2016 \textbf{includes 29 Feb 2016}
+(since 2016 is a leap year and the leap day falls before 15 March). So this interval has
+\textbf{2 odd days}, not 1.
+Sunday $+ 2 \to$ \textbf{Tuesday}.
+\textbf{Answer: Tuesday}
+\end{tipbox}
+
+\begin{warnbox}[Why This Trips People Up]
+The "add 1 odd day per year" shortcut only works when the year in question is ordinary \textbf{and}
+the leap day (if any) doesn't fall between the two matching dates. Always check whether 29 February
+lies inside the specific date range you're bridging --- not just whether the calendar year is leap.
+\end{warnbox}
+
+\subsection*{Q4 [M] --- Same Calendar Year}
+The calendar for the year 2023 will be the same as the calendar for which future year?
+
+\begin{tipbox}[Solution]
+2023 is ordinary. Track running odd days year by year starting the count from 2023$\to$2024:
+\begin{center}
+\begin{tabular}{lcc}
+\toprule
+Transition & Odd days added & Running total (mod 7) \\
+\midrule
+2023 $\to$ 2024 (2023 ordinary) & 1 & 1 \\
+2024 $\to$ 2025 (2024 leap) & 2 & 3 \\
+2025 $\to$ 2026 (2025 ordinary) & 1 & 4 \\
+2026 $\to$ 2027 (2026 ordinary) & 1 & 5 \\
+2027 $\to$ 2028 (2027 ordinary) & 1 & 6 \\
+2028 $\to$ 2029 (2028 leap) & 2 & 1 \\
+2029 $\to$ 2030 (2029 ordinary) & 1 & 2 \\
+2030 $\to$ 2031 (2030 ordinary) & 1 & 3 \\
+2031 $\to$ 2032 (2031 ordinary) & 1 & 4 \\
+2032 $\to$ 2033 (2032 leap) & 2 & 6 \\
+2033 $\to$ 2034 (2033 ordinary) & 1 & 0 \\
+\bottomrule
+\end{tabular}
+\end{center}
+Running total first hits a multiple of 7 at \textbf{2034}, and 2034 is also an ordinary year
+(matching 2023's type). \textbf{Answer: 2034}
+\end{tipbox}
+
+\subsection*{Q5 [H] --- Century Reasoning}
+Prove that the last day of a century (year ending in 00) can never be a Tuesday, Thursday, or Saturday.
+
+\begin{tipbox}[Solution]
+The last day of the $n$-th century corresponds to a cumulative odd-day count from a fixed starting
+point equal to $5n \bmod 7$ for $n$ not a multiple of 4, and $0$ when $n$ is a multiple of 4
+(from the 400-year rule). Evaluate $5n \bmod 7$ for $n = 1, 2, 3$ (since $n=4$ gives 0):
+\[
+n=1: 5 \quad n=2: 10 \equiv 3 \quad n=3: 15 \equiv 1 \quad n=4: 0
+\]
+So the only possible odd-day residues for a century's last day are $\{0, 1, 3, 5\}$, which --- using
+the reference that year 1's last day (31 Dec, year 0 effectively) corresponds to Sunday being residue
+0 --- map to a fixed subset of just four weekdays. Direct computation (as shown in standard references)
+confirms centuries can only end on \textbf{Sunday, Monday, Wednesday, or Friday}, never Tuesday,
+Thursday, or Saturday.
+\textbf{Answer: Because only 4 distinct odd-day residues (0, 1, 3, 5) are possible for century
+boundaries, only 4 of the 7 weekdays are reachable --- and Tuesday, Thursday, Saturday are never
+among them.}
+\end{tipbox}
+
+\subsection*{Q6 [H] --- Reverse Problem}
+1 January of a certain year is a Friday. 1 January of the following year is a Sunday. What can you
+conclude about the certain year, and what day is 1 January two years later?
+
+\begin{tipbox}[Solution]
+Going from Friday to Sunday is a shift of \textbf{2 odd days} $\Rightarrow$ the certain year must be a
+\textbf{leap year} (only leap years contribute 2 odd days). So the certain year has 366 days, and the
+following year is ordinary, contributing 1 odd day.
+Sunday $+ 1 \to$ \textbf{Monday} for 1 January two years later.
+\textbf{Answer: The certain year is a leap year; 1 January two years later is a Monday.}
+\end{tipbox}
+
+\subsection*{Q7 [H] --- Multi-Step Combined Problem}
+If 1 January 2001 was a Monday, find the day of the week on 29 February 2004, and verify 2004 is
+indeed a leap year using the divisibility rule.
+
+\begin{tipbox}[Solution]
+\textbf{Leap year check:} $2004 / 4 = 501$ exactly, and 2004 is not a century year, so \textbf{2004 is
+a leap year}. \checkmark
+
+\textbf{Odd days from 1 Jan 2001 to 1 Jan 2004} (years 2001, 2002, 2003 --- all ordinary):
+$3 \times 1 = 3$ odd days. Monday $+ 3 \to$ \textbf{Thursday} (this is 1 Jan 2004).
+
+\textbf{Odd days from 1 Jan 2004 to 29 Feb 2004:}
+January has 31 days $\to 31 \bmod 7 = 3$ odd days (this brings us to 1 Feb).
+Add 28 more days to reach 29 Feb: $28 \bmod 7 = 0$ odd days.
+Total: $3 + 0 = 3$ odd days.
+
+Thursday $+ 3 \to$ \textbf{Sunday}.
+\textbf{Answer: 29 February 2004 was a Sunday.}
+\end{tipbox}
+
+\subsection*{Q8 [H] --- Century-Spanning Problem}
+If 1 January 2001 was a Monday, what day of the week is 1 January 2101?
+
+\begin{tipbox}[Solution]
+We need the total odd days contributed by the years 2001 through 2100 (100 full years elapsing).
+
+\textbf{Leap years in 2001--2100:} every year divisible by 4 is a leap year \emph{unless} it's a
+century year not divisible by 400. In this range: 2004, 2008, \ldots, 2096 are leap
+$\Rightarrow \dfrac{2096 - 2004}{4} + 1 = 24$ leap years. The only century year in range, 2100, is
+\textbf{not} divisible by 400, so it is \emph{not} leap (and it's already excluded from the count
+above since it isn't divisible by 4 in the "leap" sense we need to re-verify --- 2100 is divisible by
+4 but excluded by the century rule, so it contributes as an \textbf{ordinary} year instead).
+
+\begin{itemize}[leftmargin=1.4em]
+  \item Leap years: 24
+  \item Ordinary years: $100 - 24 = 76$
+  \item Odd days $= (24 \times 2) + (76 \times 1) = 48 + 76 = 124$
+  \item $124 \bmod 7 = 124 - 119 = 5$
+\end{itemize}
+
+Monday $+ 5$ odd days $\to$ \textbf{Saturday}.
+\textbf{Answer: 1 January 2101 is a Saturday.}
+\end{tipbox}
+
+\begin{warnbox}[Why This Is a Common CAT/Placement Trap]
+The trap is treating 2100 as a normal leap year because it's divisible by 4. Since it's a century year
+\textbf{not} divisible by 400, it must be excluded --- this single oversight shifts the final answer
+by one full odd day (which changes the answer from Saturday to Sunday if missed).
+\end{warnbox}
+
+\section*{Answer Key Summary}
+\begin{center}
+\begin{tabular}{cl}
+\toprule
+Question & Answer \\
+\midrule
+Q1 & Thursday \\
+Q2 & Tuesday \\
+Q3 & Tuesday \\
+Q4 & 2034 \\
+Q5 & Only Sun/Mon/Wed/Fri possible for century-end (proof-based) \\
+Q6 & Certain year is leap; 2 years later = Monday \\
+Q7 & Sunday \\
+Q8 & Saturday \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\end{document}
