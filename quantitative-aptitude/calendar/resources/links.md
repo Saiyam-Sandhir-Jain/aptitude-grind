@@ -57,9 +57,17 @@ aptitude problems (odd days, leap years, day-of-week calculations).
 
 ## 🧭 How to Use These Resources
 
-1. Start with this repo's own `notes/` files for the core method — they're self-contained.
+1. Start with this repo's own `notes/` files for the core method — they're self-contained:
+   `01-fundamentals.md` (odd days, leap years), `02-fast-tricks-and-shortcuts.md` (anchor method,
+   month codes, all the speed tricks), and `03-question-pattern-catalog.md` (every question phrasing
+   you'll meet, grouped by which trick solves it).
 2. Use IndiaBIX / PrepInsta / Talent Battle for **volume practice** once the method is clear.
 3. Watch one of the YouTube videos above if you prefer a spoken walkthrough of the odd-days method
    or the month-code shortcut.
 4. Use Testbook's data-sufficiency set to practice the "CAT-style" reasoning variant of calendar
    questions, which is different from direct day-lookup questions.
+5. ⚠️ A note on external sources: several popular coaching sites repeat the claim that an ordinary
+   year's calendar always repeats after "6, 11, 17, or 28" years. This repo's own notes verified that
+   claim against three thousand years of real calendars and found the "17" figure never actually
+   occurs — see `02-fast-tricks-and-shortcuts.md` §7 for the corrected gaps. Treat any single
+   external source's shortcuts as a starting point to verify, not gospel.

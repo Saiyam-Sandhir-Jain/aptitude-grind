@@ -120,12 +120,26 @@ To find the day of the week on date $D$ of month $M$, year $Y$:
 \end{enumerate}
 \end{formulabox}
 
+\textbf{Don't split the years into 1600 + 400 + leftover by hand.} That decomposition appears in a
+lot of older textbooks, but it's a slow way of doing one thing: throwing away every complete
+400-year block, because a complete 400-year block always contributes exactly 0 odd days. There is a
+one-line way to get the same ``leftover'' number:
+
+\begin{tipbox}[Shortcut]
+Odd days from complete years up to year $Y-1$ depend only on $(Y-1) \bmod 400$, because every full
+400-year block cancels out. Take the previous year, reduce it mod 400, and count odd days for
+\emph{only that many years} --- no need to think about which specific 400-year block you're in.
+\end{tipbox}
+
 \begin{examplebox}[Worked Example --- 15 August 2010]
 \textbf{Step 1: Years up to 2009.}
+\[
+2009 \bmod 400 = 9 \quad (2000 = 5\times 400,\ \text{remainder } 9)
+\]
+So you only need odd days for the 9 years \textbf{2001--2009} --- nothing before that matters.
 \begin{itemize}[leftmargin=1.4em]
-  \item 1600 years $\to$ 0 odd days; 400 years (1600--1999... use nearest 400 block) $\to$ 0 odd days
-  \item Remaining 9 years (2001--2009): 2004 and 2008 are leap $\Rightarrow$ 2 leap $+$ 7 ordinary
-    $= (2 \times 2) + (7 \times 1) = 11 \equiv 4$ odd days
+  \item Leap years in 2001--2009: 2004, 2008 $\Rightarrow$ 2 leap, 7 ordinary
+  \item Odd days $= (2 \times 2) + (7 \times 1) = 4 + 7 = 11 \equiv \textbf{4} \pmod 7$
 \end{itemize}
 \textbf{Step 2: Months elapsed (Jan--Jul 2010) + 15 days of Aug.}
 \[
@@ -133,16 +147,25 @@ To find the day of the week on date $D$ of month $M$, year $Y$:
 \]
 \textbf{Step 3: Total.}
 \[
-0 + 0 + 4 + 3 = 7 \equiv 0 \pmod 7 \Rightarrow \textbf{Sunday}
+4 + 3 = 7 \equiv 0 \pmod 7 \Rightarrow \textbf{Sunday}
 \]
 15 August 2010 was indeed a \textbf{Sunday}.
 \end{examplebox}
 
+\begin{warnbox}[Common Mistake]
+Writing $2009 = 1600 + 400 + 9$ and separately zeroing out the 1600 and the 400 blocks. It reaches
+the same right answer, but it's two unnecessary steps under exam time pressure. $2009 \bmod 400 = 9$
+gets you the same ``9 leftover years'' in one line --- that's all the extra decomposition was ever
+doing.
+\end{warnbox}
+
 \begin{tipbox}[Faster Alternative]
-For placement-test speed, most people skip the "years since year 1" method entirely and instead
-work \textbf{relative to a known anchor date} (e.g., "1 Jan 2000 was a Saturday" or "1 Jan 1 was
-Monday") using only the years \emph{between} the anchor and the target date. This is faster and less
-error-prone --- see \texttt{02-tricks-and-shortcuts.tex} for the anchor-date and month-code methods.
+For placement-test speed, most people skip the ``years since year 1'' method entirely and instead
+work \textbf{relative to a known anchor date} (e.g., ``1 Jan 2000 was a Saturday'') using only the
+years \emph{between} the anchor and the target date --- no mod-400 needed at all, since the anchor is
+already recent. See \texttt{02-fast-tricks-and-shortcuts.tex} for the anchor-date and month-code
+methods, and \texttt{03-question-pattern-catalog.tex} for every question type you'll meet in
+placement tests, each with its own fastest method.
 \end{tipbox}
 
 \section{Key Takeaways}

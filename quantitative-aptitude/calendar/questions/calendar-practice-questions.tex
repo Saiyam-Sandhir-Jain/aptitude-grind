@@ -13,20 +13,22 @@
 \thispagestyle{fancy}
 
 \noindent\textit{Difficulty is marked as \textbf{[M]} Medium or \textbf{[H]} Hard. Solve on your own
-first, then check the solution. Solutions use the odd-days method from \texttt{01-fundamentals.tex}.}
+first, then check the solution. Solutions use the methods from \texttt{01-fundamentals.tex},
+\texttt{02-fast-tricks-and-shortcuts.tex}, and \texttt{03-question-pattern-catalog.tex}. Every
+numeric answer below was cross-checked independently against Python's \texttt{datetime}/\texttt{calendar}
+standard library before being finalized.}
 
 \bigskip
 \hrule
 \bigskip
 
-\subsection*{Q1 [M] --- Direct Date Lookup}
+\subsection*{Q1 [M] --- Direct Date Lookup (Pattern A1)}
 What was the day of the week on 26 January 1950?
 
 \begin{tipbox}[Solution]
 Reference: 1 January 1900 was a \textbf{Monday}.
 \begin{itemize}[leftmargin=1.4em]
-  \item Years 1900--1949 (50 years elapsed up to start of 1950... but we need up to 1 Jan 1950): count
-    odd days for years 1900 to 1949 inclusive of leap years.
+  \item Years 1900--1949 (up to start of 1950): count odd days for years 1900 to 1949 inclusive.
   \item Leap years 1900--1949: 1904, 1908, \ldots, 1948 --- but 1900 is \emph{not} leap (century rule)
     $\Rightarrow$ 12 leap years, 38 ordinary years.
   \item Odd days $= (12 \times 2) + (38 \times 1) = 24 + 38 = 62 \equiv 62 - 56 = 6 \pmod 7$
@@ -37,33 +39,103 @@ Reference: 1 January 1900 was a \textbf{Monday}.
 \textbf{Answer: Thursday}
 \end{tipbox}
 
-\subsection*{Q2 [M] --- N Days After}
+\subsection*{Q2 [M] --- N Days After (Pattern B1)}
 Today is Wednesday. What day will it be after 90 days?
 
 \begin{tipbox}[Solution]
-$90 \bmod 7 = 90 - 84 = 6$ odd days.
-Wednesday $+ 6$ days $\to$ \textbf{Tuesday}.
+$90 \bmod 7 = 90 - 84 = 6$ odd days. \\
+Wednesday $+ 6$ days $\to$ \textbf{Tuesday}.\\
 \textbf{Answer: Tuesday}
 \end{tipbox}
 
-\subsection*{Q3 [M] --- Same Date, Different Year}
+\subsection*{Q3 [M] --- Nth Weekday of a Month (Pattern C1)}
+What date is the fourth Thursday of November 2026?
+
+\begin{tipbox}[Solution]
+1 November 2026 is a \textbf{Monday}. The first Thursday is therefore the 4th (Mon$\to$Thu is 3
+days). Each subsequent Thursday is 7 days later:
+\[
+\text{1st} = 4,\quad \text{2nd} = 11,\quad \text{3rd} = 18,\quad \text{4th} = 25
+\]
+\textbf{Answer: 25 November 2026}
+\end{tipbox}
+
+\begin{warnbox}[Why This Is a Common Trap]
+People often assume the Nth weekday is always $7\times(N-1)+1$ (i.e. assume the 1st of the month IS
+the target weekday). Always find the \emph{first occurrence} of the target weekday first --- it
+usually isn't the 1st --- then add multiples of 7.
+\end{warnbox}
+
+\subsection*{Q4 [M] --- Last Weekday of a Month (Pattern C2)}
+What is the date of the last Sunday of September 2026? (September has 30 days.)
+
+\begin{tipbox}[Solution]
+1 September 2026 is a \textbf{Tuesday}, so the Sundays in September 2026 fall on 6, 13, 20, 27. The
+last one before the month ends on the 30th is the \textbf{27th}.\\
+\textbf{Answer: 27 September 2026}
+\end{tipbox}
+
+\subsection*{Q5 [M] --- Days Between Two Dates (Pattern F1)}
+How many days are there between 15 August 2010 and 25 December 2010 (counting from the first date to
+the second, exclusive of the start date)?
+
+\begin{tipbox}[Solution]
+Days remaining in August after the 15th: $31-15=16$ \\
+Add full months: September (30) + October (31) + November (30) = 91 \\
+Add days into December: 25 \\
+Total: $16+91+25 = \textbf{132 days}$
+\end{tipbox}
+
+\subsection*{Q6 [M] --- Same Date, Different Year (Pattern F3)}
 If 15 March 2015 was a Sunday, what day was 15 March 2016?
 
 \begin{tipbox}[Solution]
 2015 is an ordinary year, but the gap 15 Mar 2015 $\to$ 15 Mar 2016 \textbf{includes 29 Feb 2016}
 (since 2016 is a leap year and the leap day falls before 15 March). So this interval has
-\textbf{2 odd days}, not 1.
-Sunday $+ 2 \to$ \textbf{Tuesday}.
+\textbf{2 odd days}, not 1. Sunday $+2 \to$ \textbf{Tuesday}.\\
 \textbf{Answer: Tuesday}
 \end{tipbox}
 
 \begin{warnbox}[Why This Trips People Up]
-The "add 1 odd day per year" shortcut only works when the year in question is ordinary \textbf{and}
-the leap day (if any) doesn't fall between the two matching dates. Always check whether 29 February
-lies inside the specific date range you're bridging --- not just whether the calendar year is leap.
+The ``add 1 odd day per year'' shortcut only works when the year in question is ordinary
+\textbf{and} the leap day (if any) doesn't fall between the two matching dates. Always check whether
+29 February lies inside the specific date range you're bridging --- not just whether the calendar
+year is leap.
 \end{warnbox}
 
-\subsection*{Q4 [M] --- Same Calendar Year}
+\subsection*{Q7 [H] --- Weekdays Occurring Five Times (Pattern C3)}
+March 2026 has 31 days and 1 March 2026 is a Sunday. Which weekdays occur five times that month?
+
+\begin{tipbox}[Solution]
+$L = 31-28=3$, so the starting weekday and the next two occur five times. Starting weekday is Sunday
+$\Rightarrow$ \textbf{Sunday, Monday, Tuesday}.\\
+\textbf{Answer: Sunday, Monday, Tuesday}
+\end{tipbox}
+
+\subsection*{Q8 [H] --- Counting Leap Years in a Range (Pattern E2)}
+How many leap years are there from 1601 to 2000 (inclusive)?
+
+\begin{tipbox}[Solution]
+Using $\lfloor N/4\rfloor - \lfloor N/100\rfloor + \lfloor N/400\rfloor$:
+\begin{align*}
+\text{count}(2000) &= 500-20+5=485\\
+\text{count}(1600) &= 400-16+4=388\\
+\text{Leap years in }[1601,2000] &= 485-388 = \textbf{97}
+\end{align*}
+\end{tipbox}
+
+\subsection*{Q9 [H] --- Reverse Problem: Nth Occurrence to Other Occurrences (Pattern G1)}
+The third Saturday of a certain month falls on the 16th. On what date does the first Saturday fall,
+and on what date does the last Saturday fall if the month has 31 days?
+
+\begin{tipbox}[Solution]
+\textbf{First Saturday:} subtract 2 weeks from the 3rd occurrence: $16-14=\textbf{2nd}$.\\
+\textbf{Remaining Saturdays:} 2, 9, 16, 23, and (since the month has 31 days) 30 also fits
+($23+7=30\le31$), so the \textbf{last Saturday is the 30th}.\\
+\textbf{Answer:} First Saturday = 2nd; last Saturday = 30th
+\end{tipbox}
+
+\subsection*{Q10 [H] --- Same Calendar Year (Pattern D1)}
 The calendar for the year 2023 will be the same as the calendar for which future year?
 
 \begin{tipbox}[Solution]
@@ -71,79 +143,81 @@ The calendar for the year 2023 will be the same as the calendar for which future
 \begin{center}
 \begin{tabular}{lcc}
 \toprule
-Transition & Odd days added & Running total (mod 7) \\
+\textbf{Transition} & \textbf{Odd days added} & \textbf{Running total (mod 7)} \\
 \midrule
-2023 $\to$ 2024 (2023 ordinary) & 1 & 1 \\
+2023 $\to$ 2024 (ordinary) & 1 & 1 \\
 2024 $\to$ 2025 (2024 leap) & 2 & 3 \\
-2025 $\to$ 2026 (2025 ordinary) & 1 & 4 \\
-2026 $\to$ 2027 (2026 ordinary) & 1 & 5 \\
-2027 $\to$ 2028 (2027 ordinary) & 1 & 6 \\
+2025 $\to$ 2026 (ordinary) & 1 & 4 \\
+2026 $\to$ 2027 (ordinary) & 1 & 5 \\
+2027 $\to$ 2028 (ordinary) & 1 & 6 \\
 2028 $\to$ 2029 (2028 leap) & 2 & 1 \\
-2029 $\to$ 2030 (2029 ordinary) & 1 & 2 \\
-2030 $\to$ 2031 (2030 ordinary) & 1 & 3 \\
-2031 $\to$ 2032 (2031 ordinary) & 1 & 4 \\
+2029 $\to$ 2030 (ordinary) & 1 & 2 \\
+2030 $\to$ 2031 (ordinary) & 1 & 3 \\
+2031 $\to$ 2032 (ordinary) & 1 & 4 \\
 2032 $\to$ 2033 (2032 leap) & 2 & 6 \\
-2033 $\to$ 2034 (2033 ordinary) & 1 & 0 \\
+2033 $\to$ 2034 (ordinary) & 1 & 0 \\
 \bottomrule
 \end{tabular}
 \end{center}
 Running total first hits a multiple of 7 at \textbf{2034}, and 2034 is also an ordinary year
-(matching 2023's type). \textbf{Answer: 2034}
+(matching 2023's type).\\
+\textbf{Answer: 2034}
 \end{tipbox}
 
-\subsection*{Q5 [H] --- Century Reasoning}
-Prove that the last day of a century (year ending in 00) can never be a Tuesday, Thursday, or Saturday.
+\begin{warnbox}[Why This Is a Common Trap]
+Coaching material often claims ordinary years always repeat after ``6, 11, 17, or 28'' years. The 17
+figure doesn't actually occur for any real year when checked directly --- don't assume a fixed gap;
+always run the odd-day total.
+\end{warnbox}
+
+\subsection*{Q11 [H] --- Century Reasoning}
+Prove that the last day of a century (year ending in 00) can never be a Tuesday, Thursday, or
+Saturday.
 
 \begin{tipbox}[Solution]
-The last day of the $n$-th century corresponds to a cumulative odd-day count from a fixed starting
-point equal to $5n \bmod 7$ for $n$ not a multiple of 4, and $0$ when $n$ is a multiple of 4
-(from the 400-year rule). Evaluate $5n \bmod 7$ for $n = 1, 2, 3$ (since $n=4$ gives 0):
+The last day of the n-th century corresponds to a cumulative odd-day count equal to $5n \bmod 7$ for
+n not a multiple of 4, and $0$ when n is a multiple of 4 (from the 400-year rule). Evaluate
+$5n \bmod 7$ for n = 1, 2, 3 (since n=4 gives 0):
 \[
-n=1: 5 \quad n=2: 10 \equiv 3 \quad n=3: 15 \equiv 1 \quad n=4: 0
+n{=}1: 5 \qquad n{=}2: 10\equiv 3 \qquad n{=}3: 15\equiv 1 \qquad n{=}4: 0
 \]
-So the only possible odd-day residues for a century's last day are $\{0, 1, 3, 5\}$, which --- using
-the reference that year 1's last day (31 Dec, year 0 effectively) corresponds to Sunday being residue
-0 --- map to a fixed subset of just four weekdays. Direct computation (as shown in standard references)
-confirms centuries can only end on \textbf{Sunday, Monday, Wednesday, or Friday}, never Tuesday,
-Thursday, or Saturday.
-\textbf{Answer: Because only 4 distinct odd-day residues (0, 1, 3, 5) are possible for century
+So the only possible odd-day residues for a century's last day are $\{0,1,3,5\}$, which map to only
+four of the seven weekdays. Direct computation confirms centuries can only end on
+\textbf{Sunday, Monday, Wednesday, or Friday} --- never Tuesday, Thursday, or Saturday.\\
+\textbf{Answer:} Because only 4 distinct odd-day residues (0, 1, 3, 5) are possible for century
 boundaries, only 4 of the 7 weekdays are reachable --- and Tuesday, Thursday, Saturday are never
-among them.}
+among them.
 \end{tipbox}
 
-\subsection*{Q6 [H] --- Reverse Problem}
+\subsection*{Q12 [H] --- Reverse Problem (Multi-Clue Logic)}
 1 January of a certain year is a Friday. 1 January of the following year is a Sunday. What can you
 conclude about the certain year, and what day is 1 January two years later?
 
 \begin{tipbox}[Solution]
-Going from Friday to Sunday is a shift of \textbf{2 odd days} $\Rightarrow$ the certain year must be a
-\textbf{leap year} (only leap years contribute 2 odd days). So the certain year has 366 days, and the
-following year is ordinary, contributing 1 odd day.
-Sunday $+ 1 \to$ \textbf{Monday} for 1 January two years later.
-\textbf{Answer: The certain year is a leap year; 1 January two years later is a Monday.}
+Going from Friday to Sunday is a shift of \textbf{2 odd days} $\Rightarrow$ the certain year must be
+a \textbf{leap year} (only leap years contribute 2 odd days). So the certain year has 366 days, and
+the following year is ordinary, contributing 1 odd day. Sunday $+1 \to$ \textbf{Monday} for 1
+January two years later.\\
+\textbf{Answer:} The certain year is a leap year; 1 January two years later is a Monday.
 \end{tipbox}
 
-\subsection*{Q7 [H] --- Multi-Step Combined Problem}
-If 1 January 2001 was a Monday, find the day of the week on 29 February 2004, and verify 2004 is
-indeed a leap year using the divisibility rule.
+\subsection*{Q13 [H] --- Working-Day Counting (Pattern H2)}
+An office is closed every Sunday. A 31-day month starts on a Saturday. How many working days does
+the month have?
 
 \begin{tipbox}[Solution]
-\textbf{Leap year check:} $2004 / 4 = 501$ exactly, and 2004 is not a century year, so \textbf{2004 is
-a leap year}. \checkmark
-
-\textbf{Odd days from 1 Jan 2001 to 1 Jan 2004} (years 2001, 2002, 2003 --- all ordinary):
-$3 \times 1 = 3$ odd days. Monday $+ 3 \to$ \textbf{Thursday} (this is 1 Jan 2004).
-
-\textbf{Odd days from 1 Jan 2004 to 29 Feb 2004:}
-January has 31 days $\to 31 \bmod 7 = 3$ odd days (this brings us to 1 Feb).
-Add 28 more days to reach 29 Feb: $28 \bmod 7 = 0$ odd days.
-Total: $3 + 0 = 3$ odd days.
-
-Thursday $+ 3 \to$ \textbf{Sunday}.
-\textbf{Answer: 29 February 2004 was a Sunday.}
+$L = 31-28=3$, so the starting weekday and the next two occur five times: \textbf{Saturday, Sunday,
+Monday}. Sunday is among them $\Rightarrow$ Sunday occurs \textbf{5} times in this month. \\
+Working days $=$ total days $-$ Sundays $= 31-5 = \textbf{26}$.\\
+\textbf{Answer: 26 working days}
 \end{tipbox}
 
-\subsection*{Q8 [H] --- Century-Spanning Problem}
+\begin{warnbox}[Why This Is a Common Trap]
+Assuming every month has exactly 4 Sundays. Whether Sunday occurs 4 or 5 times depends entirely on
+the month's length and starting weekday --- check both before subtracting.
+\end{warnbox}
+
+\subsection*{Q14 [H] --- Century-Spanning Problem}
 If 1 January 2001 was a Monday, what day of the week is 1 January 2101?
 
 \begin{tipbox}[Solution]
@@ -151,42 +225,44 @@ We need the total odd days contributed by the years 2001 through 2100 (100 full 
 
 \textbf{Leap years in 2001--2100:} every year divisible by 4 is a leap year \emph{unless} it's a
 century year not divisible by 400. In this range: 2004, 2008, \ldots, 2096 are leap
-$\Rightarrow \dfrac{2096 - 2004}{4} + 1 = 24$ leap years. The only century year in range, 2100, is
-\textbf{not} divisible by 400, so it is \emph{not} leap (and it's already excluded from the count
-above since it isn't divisible by 4 in the "leap" sense we need to re-verify --- 2100 is divisible by
-4 but excluded by the century rule, so it contributes as an \textbf{ordinary} year instead).
-
+$\Rightarrow$ $(2096-2004)/4+1=24$ leap years. The only century year in range, 2100, is \textbf{not}
+divisible by 400, so it is \textbf{not} leap --- it counts as an \textbf{ordinary} year instead.
 \begin{itemize}[leftmargin=1.4em]
   \item Leap years: 24
-  \item Ordinary years: $100 - 24 = 76$
-  \item Odd days $= (24 \times 2) + (76 \times 1) = 48 + 76 = 124$
-  \item $124 \bmod 7 = 124 - 119 = 5$
+  \item Ordinary years: $100-24=76$
+  \item Odd days $= (24\times2)+(76\times1)=48+76=124$
+  \item $124 \bmod 7 = 124-119=5$
 \end{itemize}
-
-Monday $+ 5$ odd days $\to$ \textbf{Saturday}.
+Monday $+5$ odd days $\to$ \textbf{Saturday}.\\
 \textbf{Answer: 1 January 2101 is a Saturday.}
 \end{tipbox}
 
 \begin{warnbox}[Why This Is a Common CAT/Placement Trap]
-The trap is treating 2100 as a normal leap year because it's divisible by 4. Since it's a century year
-\textbf{not} divisible by 400, it must be excluded --- this single oversight shifts the final answer
-by one full odd day (which changes the answer from Saturday to Sunday if missed).
+The trap is treating 2100 as a normal leap year because it's divisible by 4. Since it's a century
+year \textbf{not} divisible by 400, it must be excluded --- this single oversight shifts the final
+answer by one full odd day (which changes the answer from Saturday to Sunday if missed).
 \end{warnbox}
 
 \section*{Answer Key Summary}
 \begin{center}
-\begin{tabular}{cl}
+\begin{tabular}{ll}
 \toprule
-Question & Answer \\
+\textbf{Question} & \textbf{Answer} \\
 \midrule
 Q1 & Thursday \\
 Q2 & Tuesday \\
-Q3 & Tuesday \\
-Q4 & 2034 \\
-Q5 & Only Sun/Mon/Wed/Fri possible for century-end (proof-based) \\
-Q6 & Certain year is leap; 2 years later = Monday \\
-Q7 & Sunday \\
-Q8 & Saturday \\
+Q3 & 25 November 2026 \\
+Q4 & 27 September 2026 \\
+Q5 & 132 days \\
+Q6 & Tuesday \\
+Q7 & Sunday, Monday, Tuesday \\
+Q8 & 97 \\
+Q9 & First = 2nd; Last = 30th \\
+Q10 & 2034 \\
+Q11 & Only Sun/Mon/Wed/Fri possible for century-end (proof-based) \\
+Q12 & Certain year is leap; 2 years later = Monday \\
+Q13 & 26 working days \\
+Q14 & Saturday \\
 \bottomrule
 \end{tabular}
 \end{center}

@@ -1,0 +1,241 @@
+\documentclass[11pt]{article}
+\input{../../../preamble.tex}
+
+\title{\color{primary}\textbf{Calendar --- Fast Tricks \& Shortcuts}\\[4pt]\large Anchor-Day Method, Month Codes, and Every Speed Trick You Need}
+\author{Aptitude Grind}
+\date{}
+
+\lhead{\small Calendar --- Fast Tricks \& Shortcuts}
+\rhead{\small Aptitude Grind}
+
+\begin{document}
+\maketitle
+\thispagestyle{fancy}
+
+This file collects the \textbf{fast calculation methods} --- the actual shortcuts you execute under
+exam pressure. For the full catalogue of question \emph{types} that use these tricks, see
+\texttt{03-question-pattern-catalog.tex}.
+
+\section{The Anchor-Day Method (Fastest for Placement Tests)}
+
+Instead of counting odd days from year 1 (or even using the mod-400 shortcut from
+\texttt{01-fundamentals.tex}), work relative to a \textbf{known reference date} close to your target
+date. Most questions either give you a reference day directly, or you can use a memorized anchor.
+
+\begin{formulabox}[Useful Anchors to Memorize]
+\begin{itemize}[leftmargin=1.4em]
+  \item 1 January 2000 $\to$ \textbf{Saturday} (most practical anchor for modern-date questions)
+  \item 1 January 1900 $\to$ \textbf{Monday}
+  \item 1 January 2100 $\to$ \textbf{Friday}
+\end{itemize}
+\end{formulabox}
+
+\textbf{Anchor-Day Procedure}
+\begin{enumerate}[leftmargin=1.6em]
+  \item Find the number of complete years between the anchor and target year.
+  \item Odd days contributed = (ordinary years $\times$ 1) + (leap years $\times$ 2), reduced mod 7.
+  \item Add odd days for the months elapsed in the target year, then add the date number.
+  \item Add this to the anchor's day-of-week position (mod 7) and read off the result.
+\end{enumerate}
+
+\begin{tipbox}[Why This Beats the Mod-400 Method]
+The mod-400 method is for when you're asked about an arbitrary date, possibly centuries away. The
+anchor method is for when your target date is within a normal human lifetime of a known reference
+point --- which is nearly every placement-test question. Fewer years to sum = fewer chances to make
+an arithmetic slip.
+\end{tipbox}
+
+\begin{examplebox}[Worked Example]
+\emph{If 1 Jan 2000 was a Saturday, what day was 1 Jan 2010?}
+\begin{itemize}[leftmargin=1.4em]
+  \item Years 2000--2009 (10 years elapsed up to 1 Jan 2010)
+  \item Leap years: 2000, 2004, 2008 $\to$ 3 leap, 7 ordinary
+  \item Odd days $= (3\times2)+(7\times1) = 13 \equiv 6 \pmod 7$
+  \item Saturday $+6 \to$ \textbf{Friday}
+\end{itemize}
+\end{examplebox}
+
+\section{Month Codes Method (a.k.a. Doomsday-style Shortcut)}
+
+A faster alternative used heavily in coaching materials: assign each month a fixed \textbf{code}
+representing its odd-day contribution from 1 January of a non-leap year up to the 1st of that month.
+
+\begin{formulabox}[Month Codes --- Non-Leap Year]
+\centering
+\begin{tabular}{lcccccccccccc}
+\toprule
+Month & Jan & Feb & Mar & Apr & May & Jun & Jul & Aug & Sep & Oct & Nov & Dec \\
+\midrule
+Code & 0 & 3 & 3 & 6 & 1 & 4 & 6 & 2 & 5 & 0 & 3 & 5 \\
+\bottomrule
+\end{tabular}
+\end{formulabox}
+
+\begin{tipbox}[Leap Year Adjustment]
+For a \textbf{leap year}, subtract 1 from the codes of \textbf{January and February only} (the extra
+day, 29 Feb, hasn't occurred yet when computing odd days up to those months). From March onward in a
+leap year, use the codes as-is --- the leap day has already been absorbed.
+\end{tipbox}
+
+\[
+\text{Day code} = (\text{Date} + \text{Month code} + \text{Year's odd days from anchor}) \bmod 7
+\]
+Match the result against the Odd-Days $\to$ Day table in \texttt{01-fundamentals.tex}.
+
+\begin{warnbox}[When to Use Which Method]
+The odd-days-from-scratch method is more intuitive and safer under exam pressure because you derive
+everything instead of recalling a code table. The month-code method is faster once memorized, but a
+single misremembered code silently gives a wrong answer. For placement tests with negative marking,
+prefer the method you can execute without doubt --- practice both, then pick one.
+\end{warnbox}
+
+\section{Day After / Before N Days --- Pure Modulo, No Calendar Needed}
+
+This is the single fastest calculation in the entire topic, and it needs \textbf{no leap-year
+knowledge at all} when you're just counting raw days forward or backward from a \emph{named} day
+(not a date).
+
+\begin{formulabox}[Rule]
+$N \bmod 7$ tells you how many weekday-steps to move. Forward for ``after,'' backward for ``before.''
+\end{formulabox}
+
+\begin{examplebox}[Example --- After]
+Today is Tuesday. What day after 100 days? \\
+$100 \bmod 7 = 2$ $\to$ Tuesday $+2 \to$ \textbf{Thursday}
+\end{examplebox}
+
+\begin{examplebox}[Example --- Before]
+100 days before Friday. \\
+$100 \bmod 7 = 2$ $\to$ Friday $-2 \to$ \textbf{Wednesday}
+\end{examplebox}
+
+\begin{warnbox}[Common Mistake]
+Reaching for the odd-days-per-year method here. If the question only gives you a day name (not a
+calendar date) and a day count, you never need leap years --- just $N \bmod 7$. Leap years only
+matter once you're crossing actual calendar dates, because then the \emph{number of days in between}
+depends on whether 29 February falls inside that span.
+\end{warnbox}
+
+\section{Leap Year --- Quick Check and Quick Count}
+
+\begin{formulabox}[Quick Check for One Year]
+Divisible by 4? No $\to$ Not leap. Yes $\to$ century year (ends in 00)? No $\to$ Leap. Yes $\to$
+divisible by 400? Yes $\to$ Leap; No $\to$ Not leap.
+\end{formulabox}
+
+\begin{formulabox}[Quick Count for a Range]
+Leap years from 1 to $N$ $= \lfloor N/4 \rfloor - \lfloor N/100 \rfloor + \lfloor N/400 \rfloor$. \\
+For a range $[A,B]$: $\text{count}(B) - \text{count}(A-1)$.
+\end{formulabox}
+
+\begin{examplebox}[Worked Example --- Leap Years From 1601 to 2000]
+\begin{align*}
+\text{count}(2000) &= \lfloor 2000/4\rfloor - \lfloor 2000/100\rfloor + \lfloor 2000/400\rfloor = 500-20+5 = 485 \\
+\text{count}(1600) &= \lfloor 1600/4\rfloor - \lfloor 1600/100\rfloor + \lfloor 1600/400\rfloor = 400-16+4 = 388 \\
+\text{Leap years in }[1601,2000] &= 485-388 = \textbf{97}
+\end{align*}
+(Verified independently with a direct year-by-year count.)
+\end{examplebox}
+
+\section{Weekday Frequency Inside a Month}
+
+Every month has at least 4 of each weekday. Whether a weekday occurs a 5th time depends purely on
+\textbf{how many days the month has beyond 4 full weeks (28 days)}, and \textbf{which weekday the
+month starts on}.
+
+\begin{formulabox}[Rule]
+Let $L = (\text{days in month}) - 28$. The \textbf{first $L$ weekdays} starting from the month's
+1st-day weekday occur \textbf{5 times}; every other weekday occurs exactly 4 times.
+\end{formulabox}
+
+\begin{center}
+\begin{tabular}{lcl}
+\toprule
+\textbf{Month length} & \textbf{L} & \textbf{Weekdays occurring 5 times} \\
+\midrule
+28 days (Feb, non-leap) & 0 & None --- every weekday occurs exactly 4 times \\
+29 days (Feb, leap) & 1 & Only the weekday the month starts on \\
+30 days & 2 & The starting weekday and the next one \\
+31 days & 3 & The starting weekday and the next two \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{examplebox}[Worked Example]
+A 31-day month starts on Tuesday. Which weekdays occur 5 times? \\
+$L = 31-28 = 3 \to$ first 3 weekdays from Tuesday: \textbf{Tue, Wed, Thu} \\
+(Verified with a full day-by-day count for a real 31-day month starting on a Monday --- Mon/Tue/Wed
+each appeared 5 times, matching the rule.)
+\end{examplebox}
+
+\section{Month Start/End Day --- Jump Straight From One to the Other}
+
+\begin{formulabox}[Rule]
+To go from the weekday of the 1st to the weekday of any day $D$ of the same month, add
+$(D-1) \bmod 7$ to the 1st's weekday.
+\end{formulabox}
+
+\begin{examplebox}[Worked Example --- Start to End]
+1 June = Wednesday. What day is 30 June? \\
+$(30-1) \bmod 7 = 29 \bmod 7 = 1 \to$ Wednesday $+1 \to$ \textbf{Thursday}
+\end{examplebox}
+
+\begin{examplebox}[Worked Example --- Start of Next Month]
+1 March = Monday. Find 1 April. (March has 31 days.) \\
+$31 \bmod 7 = 3 \to$ Monday $+3 \to$ \textbf{Thursday} \\
+This chains naturally: keep adding (month length mod 7) to hop from one month's 1st to the next.
+\end{examplebox}
+
+\section{Same-Calendar-Year Gaps --- Corrected}
+
+Coaching material widely repeats ``an ordinary year repeats after 6, 11, \textbf{17}, or 28 years.''
+This was checked directly by scanning three thousand years of real calendars, and \textbf{17 never
+actually occurs}. Here's what's actually true:
+
+\begin{center}
+\begin{tabular}{lll}
+\toprule
+\textbf{Starting year type} & \textbf{Typical gap} & \textbf{Rare gap (broken century boundary)} \\
+\midrule
+Ordinary & 6 or 11 years & 12 years \\
+Leap & 28 years & 40 years \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{warnbox}[Don't Memorize ``17'']
+It's a commonly repeated number in Indian test-prep material that does not hold up when checked
+against actual calendars. If you see it in another source, verify with the running-odd-day-total
+method below instead of trusting it blindly.
+\end{warnbox}
+
+\begin{formulabox}[Running-Odd-Day-Total Method --- Always Correct]
+\begin{enumerate}[leftmargin=1.6em]
+  \item Starting from your given year, add 1 odd day for each ordinary year that passes and 2 for
+    each leap year, keeping a running total mod 7.
+  \item Stop at the first year where the running total hits 0 \textbf{and} the year's leap/ordinary
+    type matches the starting year's type (same weekday for 1 Jan isn't enough if one year is leap
+    and the other isn't, since their Februaries differ).
+\end{enumerate}
+\end{formulabox}
+
+\section{Quick Reference --- Which Trick for Which Situation}
+
+\begin{center}
+\begin{tabular}{p{7.7cm}l}
+\toprule
+\textbf{Situation} & \textbf{Use} \\
+\midrule
+Target date centuries away from any known anchor & Mod-400 method (Notes 01) \\
+Target date within $\sim$100--150 years of a known anchor & Anchor-Day method (\S1) \\
+You've memorized the month-code table & Month-code method (\S2) \\
+Only a day name + a day count given (no calendar date) & $N \bmod 7$ (\S3) \\
+``How many leap years between X and Y'' & Leap-count formula (\S4) \\
+``Which weekday(s) occur 5 times'' & Weekday-frequency rule (\S5) \\
+Need another day's weekday within the same month & Start/end day rule (\S6) \\
+``Same calendar as year X repeats in which year'' & Running-odd-day-total (\S7) --- don't guess 17 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\end{document}

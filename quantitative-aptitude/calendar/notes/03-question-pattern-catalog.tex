@@ -1,0 +1,222 @@
+\documentclass[11pt]{article}
+\input{../../../preamble.tex}
+
+\title{\color{primary}\textbf{Calendar --- Question Pattern Catalog}\\[4pt]\large Every Way Placement Exams Phrase a Calendar Question, Grouped by the Trick That Solves It}
+\author{Aptitude Grind}
+\date{}
+
+\lhead{\small Calendar --- Question Pattern Catalog}
+\rhead{\small Aptitude Grind}
+
+\begin{document}
+\maketitle
+\thispagestyle{fancy}
+
+Calendar questions look varied, but almost every one of them reduces to a handful of tricks from
+\texttt{02-fast-tricks-and-shortcuts.tex}. This file catalogues the actual \textbf{phrasings} you'll
+meet in TCS NQT, Infosys, Wipro, Capgemini, and CAT-style tests, grouped by category, each with the
+fastest method and a verified mini-example. Skim this before a test to pattern-match a question to
+its solution method in seconds.
+
+\section{Category A --- Direct Day Lookup}
+
+\begin{examplebox}[A1. Find the Day of a Given Date]
+\emph{``What day of the week was 15 August 1947?''} \\
+The most common calendar question by far --- direct application of the odd-days / anchor method.
+\textbf{Method:} \S1 of Notes 02, or the mod-400 method in Notes 01. \\
+\textbf{Answer:} 15 August 1947 was a \textbf{Friday}.
+\end{examplebox}
+
+\section{Category B --- Relative Day Arithmetic (No Calendar Needed)}
+
+\begin{examplebox}[B1. Day After N Days]
+\emph{``Today is Tuesday. What day will it be after 100 days?''} \\
+\textbf{Method:} $N \bmod 7$, step forward. $100 \bmod 7 = 2 \to$ Tuesday $+2 = $ \textbf{Thursday}.
+\end{examplebox}
+
+\begin{examplebox}[B2. Day Before N Days]
+\emph{``100 days before Friday is which day?''} \\
+\textbf{Method:} $N \bmod 7$, step backward. $100 \bmod 7 = 2 \to$ Friday $-2 = $ \textbf{Wednesday}.
+\end{examplebox}
+
+\begin{examplebox}[B3. Yesterday / Tomorrow Questions]
+\emph{``Tomorrow is Monday. What was yesterday?''} \\
+\textbf{Method:} Anchor on the one day you're told, count off by $\pm 1$. Tomorrow = Monday
+$\Rightarrow$ Today = Sunday $\Rightarrow$ Yesterday = \textbf{Saturday}.
+\end{examplebox}
+
+\begin{examplebox}[B4. Chained Relative-Day Questions]
+\emph{``Three days after tomorrow is Friday. What day is today?''} \\
+\textbf{Method:} Work backward. ``Three days after tomorrow'' = today $+4$ = Friday
+$\Rightarrow$ today = Friday $-4$ = \textbf{Monday}.
+\end{examplebox}
+
+\begin{examplebox}[B5. Mirror-Day Questions]
+\emph{``If yesterday was Thursday, what day will it be 100 days after tomorrow?''} \\
+\textbf{Method:} Pin down today first (yesterday = Thursday $\Rightarrow$ today = Friday), then
+tomorrow = Saturday, then apply B1: $100 \bmod 7 = 2 \to$ Saturday $+2 = $ \textbf{Monday}.
+\end{examplebox}
+
+\begin{examplebox}[B6. Calendar + Clock Combined]
+\emph{``It is Monday, 11 PM. What day and time will it be after 30 hours?''} \\
+\textbf{Method:} Split into full days + leftover hours: $30 = 24+6$. One full day moves Monday
+$\to$ Tuesday; the remaining 6 hours push 11 PM past midnight, landing on
+\textbf{Wednesday, 5 AM}. Always check whether leftover hours cross midnight.
+\end{examplebox}
+
+\section{Category C --- Nth / Last Weekday of a Month}
+
+\begin{examplebox}[C1. Nth Weekday of a Month]
+\emph{``The third Monday of July 2026 falls on which date?''} \\
+\textbf{Method:} Find the weekday of the 1st, add 7 per subsequent occurrence.
+1 July 2026 = Wednesday $\to$ first Monday = 6th $\to$ third Monday $= 6+14 = $ \textbf{20th}.
+\end{examplebox}
+
+\begin{examplebox}[C2. Last Weekday of a Month]
+\emph{``Find the last Friday of February 2026 (28-day, non-leap).''} \\
+\textbf{Method:} Find the weekday of the last day, count back in steps of 7 to the target weekday.
+\textbf{Answer: 27 February 2026} (verified directly against the month).
+\end{examplebox}
+
+\begin{examplebox}[C3. Which Weekdays Occur 5 Times]
+\emph{``In a 31-day month starting on a Tuesday, which weekdays occur 5 times?''} \\
+\textbf{Method:} \S5 rule of Notes 02 --- $L = \text{days}-28$. For 31 days, $L=3$: the starting
+weekday and the next two. Starting Tuesday $\Rightarrow$ \textbf{Tuesday, Wednesday, Thursday}.
+\end{examplebox}
+
+\begin{examplebox}[C4. February-Specific Frequency]
+\emph{``In a leap year, which weekday occurs 5 times in February?''} \\
+\textbf{Method:} 29 days $\Rightarrow L=1 \Rightarrow$ only the weekday 1 February falls on. In a
+non-leap February (28 days, $L=0$), \textbf{no} weekday occurs 5 times --- all seven occur exactly
+4 times.
+\end{examplebox}
+
+\section{Category D --- Same Calendar / Repeating Year}
+
+\begin{examplebox}[D1. Same Calendar as a Given Year]
+\emph{``The calendar for 2026 will be the same as the calendar for which future year?''} \\
+\textbf{Method:} Running-odd-day-total from Notes 02 \S7 --- don't assume a fixed gap.
+\textbf{Answer for 2026 specifically: 2037} (verified; 2026 is ordinary, gap = 11 years).
+\end{examplebox}
+
+\begin{examplebox}[D2. Odd-One-Out Calendar]
+\emph{``Which of these years has a calendar different from the others: 1997, 2003, 2014, 2025?''} \\
+\textbf{Method:} Two years share a calendar only if both are the same type (ordinary/leap)
+\textbf{and} 1 January falls on the same weekday. Check leap/non-leap status first to eliminate
+options fast, then compare 1 January weekdays only among years of matching type.
+\end{examplebox}
+
+\begin{examplebox}[D3. Calendar Repeats After N Years (Cycle Length)]
+\emph{``After how many years does a leap year's calendar typically repeat?''} \\
+\textbf{Method:} Table in Notes 02 \S7 --- typically \textbf{28 years} for a leap year (rarely 40,
+only near a century that breaks the 4-year leap rule). For an ordinary year, typically
+\textbf{6 or 11 years} (rarely 12). Never assume 17 --- that number doesn't actually occur.
+\end{examplebox}
+
+\section{Category E --- Leap Year Reasoning}
+
+\begin{examplebox}[E1. Is This Year a Leap Year?]
+\emph{``Is 2100 a leap year?''} \\
+\textbf{Method:} Notes 02 \S4 quick check. 2100 is divisible by 4 and by 100, but \textbf{not} by
+400 $\Rightarrow$ \textbf{not a leap year}. Classic trap --- most people stop at ``divisible by 4.''
+\end{examplebox}
+
+\begin{examplebox}[E2. Counting Leap Years in a Range]
+\emph{``How many leap years are there from 1601 to 2000?''} \\
+\textbf{Method:} Notes 02 \S4 formula, $\text{count}(2000)-\text{count}(1600) = 485-388 = $
+\textbf{97}.
+\end{examplebox}
+
+\begin{examplebox}[E3. Century / Leap-Year Reasoning (CAT-style)]
+\emph{``Can the last day of a century (a year ending in 00) ever fall on a Tuesday?''} \\
+\textbf{Method:} Centuries only ever contribute 5, 3, 1, or 0 odd days (for 100, 200, 300, 400-year
+blocks) --- never 2, 4, or 6. So a century's last day can only be \textbf{Sunday, Monday, Wednesday,
+or Friday}, never Tuesday, Thursday, or Saturday.
+\end{examplebox}
+
+\section{Category F --- Date-to-Date and Span Problems}
+
+\begin{examplebox}[F1. Days Between Two Dates]
+\emph{``How many days are there between 15 August 2010 and 25 December 2010?''} \\
+\textbf{Method:} Convert both to a running day-of-year count (or subtract directly), being careful
+whether inclusive or exclusive is wanted. \textbf{Answer: 132 days} (exclusive of the start date).
+\end{examplebox}
+
+\begin{examplebox}[F2. Consecutive Dates Within a Month]
+\emph{``If 18 January is a Tuesday, what day is 27 January?''} \\
+\textbf{Method:} Notes 02 \S6 rule --- difference in days mod 7. $27-18=9$, $9 \bmod 7 = 2 \to$
+Tuesday $+2 = $ \textbf{Thursday}.
+\end{examplebox}
+
+\begin{examplebox}[F3. Same Date, Different Year (Leap-Day Trap)]
+\emph{``If 15 March 2015 was a Sunday, what day was 15 March 2016?''} \\
+\textbf{Method:} Don't just add 1 odd day for ``one year passing'' --- check whether 29 February
+falls \textbf{inside the specific span} being bridged. Here 29 Feb 2016 falls between the two dates,
+so the gap is \textbf{2} odd days, not 1. Sunday $+2 \to$ \textbf{Tuesday}.
+\end{examplebox}
+
+\section{Category G --- Reverse Problems (Given a Clue, Find the Date/Day)}
+
+\begin{examplebox}[G1. Given the Nth Occurrence, Find the 1st Occurrence]
+\emph{``The third Saturday of a month falls on the 16th. Find the date of the first Saturday.''} \\
+\textbf{Method:} Subtract $7\times(N-1)$ days. Third minus 2 weeks: $16-14=2$. \textbf{Answer: 2nd.}
+\end{examplebox}
+
+\begin{examplebox}[G2. Given the Month's Starting Day, Find a Later Date's Day]
+\emph{``A month starts on Wednesday and has 30 days. What day is the 30th?''} \\
+\textbf{Method:} Notes 02 \S6 rule --- $(30-1) \bmod 7 = 29 \bmod 7 = 1 \to$ Wednesday $+1 = $
+\textbf{Thursday}.
+\end{examplebox}
+
+\begin{examplebox}[G3. Calendar Matching --- Find All Occurrences of a Weekday]
+\emph{``If the 15th of a month is a Friday, what other dates in that month are Fridays?''} \\
+\textbf{Method:} Every matching weekday is exactly 7 days apart. From the 15th: 1, 8,
+\textbf{15, 22, 29} (list depends on month length --- always check both directions from the known
+date, not just forward).
+\end{examplebox}
+
+\section{Category H --- Logic Puzzles and Word Problems}
+
+\begin{examplebox}[H1. Birthday / Recurrence Puzzles]
+\emph{``A person was born on a Monday. Is it possible for their birthday to fall on a Monday again
+every single year?''} \\
+\textbf{Method:} A birthday repeats on the same weekday only if the gap between birthdays
+contributes 0 odd days --- impossible every year, since every ordinary year contributes 1 odd day
+and every leap year contributes 2. It can only repeat on the same weekday in the rare years where
+the running odd-day total (Notes 02 \S7) resets to a multiple of 7, not annually.
+\end{examplebox}
+
+\begin{examplebox}[H2. Working-Day Counting]
+\emph{``An office is closed every Sunday. If a 31-day month starts on a Saturday, how many working
+days does it have?''} \\
+\textbf{Method:} Count Sundays using the weekday-frequency rule (\S C3/C4), subtract from total
+days. A 31-day month starting on Saturday has $L=3$ extra weekdays (Sat, Sun, Mon occur 5 times) ---
+so Sunday occurs \textbf{5} times $\Rightarrow$ working days $= 31-5 = $ \textbf{26}.
+\end{examplebox}
+
+\begin{examplebox}[H3. Multi-Clue Logic Puzzles]
+\emph{``1 January of a certain year is a Friday, and 1 January of the following year is a Sunday.
+What can you conclude about the certain year?''} \\
+\textbf{Method:} The shift from one 1 January to the next equals that year's odd-day contribution.
+Friday $\to$ Sunday is a shift of \textbf{2} odd days, which only a \textbf{leap year} contributes
+$\Rightarrow$ the certain year must be a leap year.
+\end{examplebox}
+
+\section{Priority Order for Limited Prep Time}
+
+If you're short on time, drill these first --- they cover the large majority of what actually
+appears in placement tests, roughly in order of frequency:
+
+\begin{enumerate}[leftmargin=1.6em]
+  \item \textbf{A1} --- Find the day for a given date (mod-400 or anchor method)
+  \item \textbf{B1/B2} --- Day after/before N days (pure $\bmod 7$)
+  \item \textbf{E1} --- Leap year identification (the century exception is the \#1 trap)
+  \item \textbf{C1} --- Nth weekday of a month
+  \item \textbf{D1} --- Same/repeating calendar year
+  \item \textbf{C3/C4} --- Weekday frequency in 28/29/30/31-day months
+  \item \textbf{F1} --- Days between two dates
+  \item \textbf{F3} --- Same date, different year (leap-day-crossing trap)
+  \item \textbf{E3} --- Century reasoning (CAT-style, less common but high-value when it appears)
+\end{enumerate}
+
+\end{document}

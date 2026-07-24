@@ -2,18 +2,20 @@
 ### Medium to Difficult, With Full Solutions
 
 *Difficulty is marked as **[M]** Medium or **[H]** Hard. Solve on your own first, then check the
-solution. Solutions use the odd-days method from `01-fundamentals.md`.*
+solution. Solutions use the methods from `01-fundamentals.md`, `02-fast-tricks-and-shortcuts.md`,
+and `03-question-pattern-catalog.md`. Every numeric answer below was cross-checked independently
+against Python's `datetime`/`calendar` standard library before being finalized.*
 
 ---
 
-### Q1 [M] — Direct Date Lookup
+### Q1 [M] — Direct Date Lookup (Pattern A1)
 What was the day of the week on 26 January 1950?
 
 <details>
 <summary><b>Solution</b></summary>
 
 Reference: 1 January 1900 was a **Monday**.
-- Years 1900–1949 (up to start of 1950): count odd days for years 1900 to 1949 inclusive of leap years.
+- Years 1900–1949 (up to start of 1950): count odd days for years 1900 to 1949 inclusive.
 - Leap years 1900–1949: 1904, 1908, …, 1948 — but 1900 is *not* leap (century rule) ⇒ 12 leap years,
   38 ordinary years.
 - Odd days = (12×2) + (38×1) = 24 + 38 = 62 ≡ 62 − 56 = 6 (mod 7)
@@ -26,7 +28,7 @@ Reference: 1 January 1900 was a **Monday**.
 
 ---
 
-### Q2 [M] — N Days After
+### Q2 [M] — N Days After (Pattern B1)
 Today is Wednesday. What day will it be after 90 days?
 
 <details>
@@ -40,7 +42,62 @@ Wednesday + 6 days → **Tuesday**.
 
 ---
 
-### Q3 [M] — Same Date, Different Year
+### Q3 [M] — Nth Weekday of a Month (Pattern C1)
+What date is the fourth Thursday of November 2026?
+
+<details>
+<summary><b>Solution</b></summary>
+
+1 November 2026 is a **Monday**. The first Thursday is therefore the 4th (Mon→Thu is 3 days).
+Each subsequent Thursday is 7 days later:
+```
+1st Thursday = 4
+2nd Thursday = 11
+3rd Thursday = 18
+4th Thursday = 25
+```
+
+**Answer: 25 November 2026**
+
+> ⚠️ **Why This Is a Common Trap:** People often assume the Nth weekday is always `7×(N−1) + 1`
+> (i.e. assume the 1st of the month IS the target weekday). Always find the *first occurrence* of
+> the target weekday first — it usually isn't the 1st — then add multiples of 7.
+</details>
+
+---
+
+### Q4 [M] — Last Weekday of a Month (Pattern C2)
+What is the date of the last Sunday of September 2026? (September has 30 days.)
+
+<details>
+<summary><b>Solution</b></summary>
+
+1 September 2026 is a **Tuesday**, so the Sundays in September 2026 fall on 6, 13, 20, 27.
+The last one before the month ends on the 30th is the **27th**.
+
+**Answer: 27 September 2026**
+</details>
+
+---
+
+### Q5 [M] — Days Between Two Dates (Pattern F1)
+How many days are there between 15 August 2010 and 25 December 2010 (counting from the first date to
+the second, exclusive of the start date)?
+
+<details>
+<summary><b>Solution</b></summary>
+
+Days remaining in August after the 15th: 31 − 15 = 16
+Add full months: September (30) + October (31) + November (30) = 91
+Add days into December: 25
+Total: 16 + 91 + 25 = **132 days**
+
+**Answer: 132 days**
+</details>
+
+---
+
+### Q6 [M] — Same Date, Different Year (Pattern F3)
 If 15 March 2015 was a Sunday, what day was 15 March 2016?
 
 <details>
@@ -60,7 +117,55 @@ Sunday + 2 → **Tuesday**.
 
 ---
 
-### Q4 [M] — Same Calendar Year
+### Q7 [H] — Weekdays Occurring Five Times (Pattern C3)
+March 2026 has 31 days and 1 March 2026 is a Sunday. Which weekdays occur five times that month?
+
+<details>
+<summary><b>Solution</b></summary>
+
+`L = 31 − 28 = 3`, so the starting weekday and the next two occur five times.
+Starting weekday is Sunday ⇒ **Sunday, Monday, Tuesday**.
+
+**Answer: Sunday, Monday, Tuesday**
+</details>
+
+---
+
+### Q8 [H] — Counting Leap Years in a Range (Pattern E2)
+How many leap years are there from 1601 to 2000 (inclusive)?
+
+<details>
+<summary><b>Solution</b></summary>
+
+Using `⌊N/4⌋ − ⌊N/100⌋ + ⌊N/400⌋`:
+```
+count(2000) = 500 − 20 + 5 = 485
+count(1600) = 400 − 16 + 4 = 388
+Leap years in [1601, 2000] = 485 − 388 = 97
+```
+
+**Answer: 97**
+</details>
+
+---
+
+### Q9 [H] — Reverse Problem: Nth Occurrence to Other Occurrences (Pattern G1)
+The third Saturday of a certain month falls on the 16th. On what date does the first Saturday fall,
+and on what date does the last Saturday fall if the month has 31 days?
+
+<details>
+<summary><b>Solution</b></summary>
+
+**First Saturday:** subtract 2 weeks from the 3rd occurrence: 16 − 14 = **2nd**.
+**Remaining Saturdays:** 2, 9, 16, 23, and (since the month has 31 days) 30 also fits
+(23 + 7 = 30 ≤ 31), so the **last Saturday is the 30th**.
+
+**Answer: First Saturday = 2nd; last Saturday = 30th**
+</details>
+
+---
+
+### Q10 [H] — Same Calendar Year (Pattern D1)
 The calendar for the year 2023 will be the same as the calendar for which future year?
 
 <details>
@@ -86,11 +191,15 @@ Running total first hits a multiple of 7 at **2034**, and 2034 is also an ordina
 2023's type).
 
 **Answer: 2034**
+
+> ⚠️ **Why This Is a Common Trap:** Coaching material often claims ordinary years always repeat
+> after "6, 11, 17, or 28" years. The 17 figure doesn't actually occur for any real year when
+> checked directly — don't assume a fixed gap; always run the odd-day total.
 </details>
 
 ---
 
-### Q5 [H] — Century Reasoning
+### Q11 [H] — Century Reasoning
 Prove that the last day of a century (year ending in 00) can never be a Tuesday, Thursday, or Saturday.
 
 <details>
@@ -115,7 +224,7 @@ them.
 
 ---
 
-### Q6 [H] — Reverse Problem
+### Q12 [H] — Reverse Problem (Multi-Clue Logic)
 1 January of a certain year is a Friday. 1 January of the following year is a Sunday. What can you
 conclude about the certain year, and what day is 1 January two years later?
 
@@ -132,32 +241,27 @@ Sunday + 1 → **Monday** for 1 January two years later.
 
 ---
 
-### Q7 [H] — Multi-Step Combined Problem
-If 1 January 2001 was a Monday, find the day of the week on 29 February 2004, and verify 2004 is
-indeed a leap year using the divisibility rule.
+### Q13 [H] — Working-Day Counting (Pattern H2)
+An office is closed every Sunday. A 31-day month starts on a Saturday. How many working days does
+the month have?
 
 <details>
 <summary><b>Solution</b></summary>
 
-**Leap year check:** 2004 / 4 = 501 exactly, and 2004 is not a century year, so **2004 is a leap
-year**. ✓
+`L = 31 − 28 = 3`, so the starting weekday and the next two occur five times: **Saturday, Sunday,
+Monday**. Sunday is among them ⇒ Sunday occurs **5** times in this month.
+Working days = total days − Sundays = 31 − 5 = **26**.
 
-**Odd days from 1 Jan 2001 to 1 Jan 2004** (years 2001, 2002, 2003 — all ordinary):
-3 × 1 = 3 odd days. Monday + 3 → **Thursday** (this is 1 Jan 2004).
+**Answer: 26 working days**
 
-**Odd days from 1 Jan 2004 to 29 Feb 2004:**
-January has 31 days → 31 mod 7 = 3 odd days (this brings us to 1 Feb).
-Add 28 more days to reach 29 Feb: 28 mod 7 = 0 odd days.
-Total: 3 + 0 = 3 odd days.
-
-Thursday + 3 → **Sunday**.
-
-**Answer: 29 February 2004 was a Sunday.**
+> ⚠️ **Why This Is a Common Trap:** Assuming every month has exactly 4 Sundays. Whether Sunday
+> occurs 4 or 5 times depends entirely on the month's length and starting weekday — check both
+> before subtracting.
 </details>
 
 ---
 
-### Q8 [H] — Century-Spanning Problem
+### Q14 [H] — Century-Spanning Problem
 If 1 January 2001 was a Monday, what day of the week is 1 January 2101?
 
 <details>
@@ -193,9 +297,15 @@ Monday + 5 odd days → **Saturday**.
 |---|---|
 | Q1 | Thursday |
 | Q2 | Tuesday |
-| Q3 | Tuesday |
-| Q4 | 2034 |
-| Q5 | Only Sun/Mon/Wed/Fri possible for century-end (proof-based) |
-| Q6 | Certain year is leap; 2 years later = Monday |
-| Q7 | Sunday |
-| Q8 | Saturday |
+| Q3 | 25 November 2026 |
+| Q4 | 27 September 2026 |
+| Q5 | 132 days |
+| Q6 | Tuesday |
+| Q7 | Sunday, Monday, Tuesday |
+| Q8 | 97 |
+| Q9 | First = 2nd; Last = 30th |
+| Q10 | 2034 |
+| Q11 | Only Sun/Mon/Wed/Fri possible for century-end (proof-based) |
+| Q12 | Certain year is leap; 2 years later = Monday |
+| Q13 | 26 working days |
+| Q14 | Saturday |

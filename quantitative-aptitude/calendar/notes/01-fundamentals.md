@@ -89,10 +89,22 @@ To find the day of the week on date `D` of month `M`, year `Y`:
 
 ### Worked Example — 15 August 2010
 
+**Don't split the years into 1600 + 400 + leftover by hand.** That decomposition shows up in a lot
+of older textbooks, but it's just a slow way of doing one thing: throwing away every complete
+400-year block, because a complete 400-year block always contributes exactly 0 odd days. There's a
+one-line way to get the same "leftover" number:
+
+> **Shortcut:** odd days from complete years up to year `Y − 1` only depend on
+> `(Y − 1) mod 400` — because every full 400-year block cancels out. So just take the previous
+> year, reduce it mod 400, and count odd days for *only that many years*.
+
 **Step 1: Years up to 2009.**
-- 1600 years → 0 odd days; 400 years (nearest 400-year block) → 0 odd days
-- Remaining 9 years (2001–2009): 2004 and 2008 are leap ⇒ 2 leap + 7 ordinary
-  = (2×2) + (7×1) = 11 ≡ 4 odd days
+```
+2009 mod 400 = 9        (2000 = 5 × 400, remainder 9)
+```
+So you only need to count odd days for the 9 years **2001–2009** — nothing before that matters.
+- Leap years in 2001–2009: 2004, 2008 ⇒ 2 leap years, 7 ordinary years
+- Odd days = (2×2) + (7×1) = 4 + 7 = 11 ≡ **4** (mod 7)
 
 **Step 2: Months elapsed (Jan–Jul 2010) + 15 days of Aug.**
 ```
@@ -101,15 +113,21 @@ To find the day of the week on date `D` of month `M`, year `Y`:
 
 **Step 3: Total.**
 ```
-0 + 0 + 4 + 3 = 7 ≡ 0 (mod 7) ⇒ Sunday
+4 + 3 = 7 ≡ 0 (mod 7) ⇒ Sunday
 ```
 15 August 2010 was indeed a **Sunday**.
 
+> ⚠️ **Common Mistake:** Writing `2009 = 1600 + 400 + 9` and separately zeroing out the 1600 and the
+> 400 blocks. It gives the same right answer, but it's two unnecessary steps under exam time
+> pressure. `2009 mod 400 = 9` gets you the same "9 leftover years" in one line — that's all the
+> extra decomposition was ever doing.
+
 > 💡 **Faster Alternative:** For placement-test speed, most people skip the "years since year 1"
 > method entirely and instead work **relative to a known anchor date** (e.g., "1 Jan 2000 was a
-> Saturday" or "1 Jan 1 was Monday") using only the years *between* the anchor and the target date.
-> This is faster and less error-prone — see `02-tricks-shortcuts-and-question-patterns.md` for the
-> anchor-date and month-code methods.
+> Saturday") using only the years *between* the anchor and the target date — no mod-400 needed at
+> all, since the anchor is already recent. See `02-fast-tricks-and-shortcuts.md` for the anchor-date
+> and month-code methods, and `03-question-pattern-catalog.md` for every question type you'll meet
+> in placement tests, each with its own fastest method.
 
 ---
 
