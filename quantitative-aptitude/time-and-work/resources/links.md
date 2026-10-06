@@ -42,6 +42,10 @@ wages, and alternate-day working).
   Intermediate-level questions with solutions, including a pipes-and-cisterns example.
   https://testbook.com/objective-questions/mcq-on-time-and-work--5eea6a1039140f30f369e855
 
+- **Ultimate Aptitude Prep - Time & Work Questions**
+  50 solved practice questions with step-by-step explanations, plus a separate step-by-step tutorial for the same topic.
+  https://ultimateaptitudeprep.com/general-aptitude/time-work/questions/
+
 ## 🎥 YouTube Videos
 
 - **Time and Work — Shortcuts & Tricks for Placement Tests, Job Interviews & Exams**
