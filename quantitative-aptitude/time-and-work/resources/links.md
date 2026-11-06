@@ -41,6 +41,10 @@ wages, and alternate-day working).
 - **Testbook — Time and Work MCQ (Objective Questions)**
   Intermediate-level questions with solutions, including a pipes-and-cisterns example.
   https://testbook.com/objective-questions/mcq-on-time-and-work--5eea6a1039140f30f369e855
+  
+- **MathsByNITian — Time and Work for Competitive Exams**
+  Chapter-wise learning resource covering Time and Work concepts, formulas, solved examples, practice questions, work and wages, and previous-year questions for SSC, Railway, Banking and Defence examinations.
+  https://mathsbynitian.in/time-and-work-concepts/
 
 ## 🎥 YouTube Videos
 
